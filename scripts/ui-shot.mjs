@@ -140,6 +140,20 @@ console.log('tab', tab)
 await sleep(800)
 console.log('rows', await shot('rows.png'))
 
+if (process.env.LIGHT) {
+  const flipped = await evaluate(`(() => {
+    const root = document.documentElement
+    root.setAttribute('data-ds-theme-source', 'light')
+    root.style.colorScheme = 'light'
+    document.body.removeAttribute('data-ds-dark-theme')
+    document.body.style.colorScheme = 'light'
+    return 'light'
+  })()`)
+  console.log('flip', flipped)
+  await sleep(900)
+  console.log('light', await shot('light-rows.png'))
+}
+
 const rect = await evaluate(`(() => {
   const row = document.querySelector('.dss-row')
   if (!row) return null
@@ -183,6 +197,13 @@ const dialog = await evaluate(`(() => {
 console.log('batch', dialog)
 await sleep(400)
 console.log('confirm', await shot('confirm.png'))
+
+console.log('theme', await evaluate(`JSON.stringify({
+  html: [...document.documentElement.attributes].map((attr) => attr.name + '=' + attr.value),
+  body: [...document.body.attributes].map((attr) => attr.name + '=' + attr.value),
+  storage: Object.keys(localStorage).slice(0, 12),
+  scheme: getComputedStyle(document.body).colorScheme,
+})`))
 
 socket.close()
 await fetch(`${endpoint}/json/close/${target.id}`)
