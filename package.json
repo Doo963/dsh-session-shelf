@@ -34,9 +34,17 @@
     "test": "node --test test/shelf.test.mjs",
     "inspect": "node scripts/inspect.mjs"
   },
+  "author": "Doo963",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/<your-account>/dsh-session-shelf.git"
+    "url": "git+https://github.com/Doo963/dsh-session-shelf.git"
+  },
+  "homepage": "https://github.com/Doo963/dsh-session-shelf#readme",
+  "bugs": {
+    "url": "https://github.com/Doo963/dsh-session-shelf/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dsh": {
     "bundle": {
