@@ -44,7 +44,8 @@
     "url": "https://github.com/Doo963/dsh-session-shelf/issues"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "dsh": {
     "bundle": {

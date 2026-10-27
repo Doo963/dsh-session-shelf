@@ -1,0 +1,36 @@
+name: publish
+
+# Publishes the plugin to npm via OIDC trusted publishing: no long-lived
+# tokens are stored anywhere. Requires a trusted publisher configuration on
+# npmjs.com pointing at this repository and this workflow filename.
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: Install npm (trusted publishing needs >= 11.5.1)
+        run: npm install -g npm@latest
+
+      - name: Run tests
+        run: node --test test/shelf.test.mjs
+
+      - name: Publish
+        run: npm publish --provenance --access public
