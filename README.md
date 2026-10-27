@@ -25,24 +25,42 @@ A DeepSeek Harness plugin that gathers archived and pinned sessions into one pan
 
 要求 DSH ≥ 0.2.1（含 `webServer` 宿主服务与 `uiWorkspace` 客户端服务）。已验证于 DSH 0.2.1-rc.3 / 桌面 44.7.0。
 
-### 方式 A · 本地目录接入 profile
+### 在桌面端安装（推荐路径）
+
+DSH 桌面端：**设置 → 插件 → 添加插件**，输入框接受四种 spec——npm 包名、Git 地址、tgz 压缩包、本地绝对路径。安装会自动激活 bundle（`installBundle` 的 `enabled` 默认 true），成功后侧栏出现「会话书柜」图标。
+
+### 方式 A · npm 包名（发布之后，最省事）
+
+```bash
+npm publish --access public
+```
+
+之后在“添加插件”里填 `dsh-session-shelf`，安装源选 **npm 官方源**；等 npmmirror 同步后也可选 **中国大陆镜像源**。
+
+### 方式 B · tgz 压缩包（离线/内网分发）
+
+```bash
+npm pack                      # 产出 dsh-session-shelf-<version>.tgz
+```
+
+把 tgz 拷到目标机器，“添加插件”里填 **tgz 的本地绝对路径**。tgz 只包含 `lib/`、`locale/`、`assets/`、`cordis.patch.yml`、`package.json`、`README.md`、`LICENSE`，不含测试与脚本。
+
+### 方式 C · 本地目录（开发调试）
 
 ```bash
 # 在 profile 目录（如 ~/.dsh/profiles/desktop）：
 pnpm add link:/path/to/session-shelf
 ```
 
-再把 `dsh-session-shelf` 加入该 profile `package.json` 的 `dsh.profile.bundles` 数组，重启 GUI 生效。
+再把 `dsh-session-shelf` 加入该 profile `package.json` 的 `dsh.profile.bundles` 数组，重启 GUI 生效。桌面端“添加插件”填目录绝对路径走的是同一套 `installBundle` 流程。
 
-### 方式 B · 作为插件装进运行中的实例
-
-在 DSH 的插件管理里把本目录当作 bundle 安装（插件会通过 `dsh.bundle.patch` 自动注册 `session-shelf` 宿主行，客户端面板随之出现）。
-
-### 方式 C · 发布 npm 之后
+### 方式 D · Git 地址（需仓库公开）
 
 ```bash
-dsh plugin add dsh-session-shelf
+dsh plugin add https://github.com/<owner>/dsh-session-shelf
 ```
+
+注意：安装器会直接向 GitHub 拉取仓库，**镜像源不代替 GitHub 下载**；国内网络访问 github.com 常失败，此时桌面端会提示“无法访问 GitHub”。私有仓库还额外需要凭据，对话框无法填写。
 
 ## 使用
 
