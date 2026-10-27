@@ -1,0 +1,5 @@
+# Layer patch consumed when this package is installed as a bundle.
+# It only appends the plugin row; every other layer stays untouched.
+- insert:
+    - id: session-shelf
+      name: 'dsh-session-shelf'

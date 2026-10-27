@@ -1,0 +1,49 @@
+{
+  "name": "dsh-session-shelf",
+  "version": "0.1.0",
+  "description": "A reading shelf for DeepSeek Harness sessions: browse archived sessions, favourites, restore or clear them. · 会话书柜：查看归档与会话收藏，一键恢复或彻底清理。",
+  "type": "module",
+  "main": "lib/index.js",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "lib",
+    "assets",
+    "locale",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "sessions",
+    "archive",
+    "cordis"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test test/shelf.test.mjs",
+    "inspect": "node scripts/inspect.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<your-account>/dsh-session-shelf.git"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  }
+}
